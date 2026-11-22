@@ -1,0 +1,164 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Unbounded", "Manrope", ui-sans-serif, sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-neon-violet: var(--neon-violet);
+  --color-neon-blue: var(--neon-blue);
+  --color-neon-cyan: var(--neon-cyan);
+  --color-live: var(--live);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-surface: var(--surface);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.85rem;
+  --background: oklch(0.105 0.012 270);
+  --foreground: oklch(0.96 0.01 260);
+  --surface: oklch(0.145 0.018 270);
+  --card: oklch(0.155 0.018 270);
+  --card-foreground: oklch(0.96 0.01 260);
+  --popover: oklch(0.19 0.018 270);
+  --popover-foreground: oklch(0.96 0.01 260);
+  --neon-violet: oklch(0.7 0.22 295);
+  --neon-blue: oklch(0.64 0.2 258);
+  --neon-cyan: oklch(0.82 0.14 195);
+  --primary: oklch(0.66 0.24 295);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.24 0.02 270);
+  --secondary-foreground: oklch(0.96 0.01 260);
+  --muted: oklch(0.22 0.016 270);
+  --muted-foreground: oklch(0.72 0.02 265);
+  --accent: oklch(0.78 0.12 85);
+  --accent-foreground: oklch(0.15 0.02 260);
+  --destructive: oklch(0.64 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
+  --live: oklch(0.65 0.24 20);
+  --success: oklch(0.76 0.16 155);
+  --warning: oklch(0.82 0.15 80);
+  --border: oklch(0.78 0.12 85 / 18%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.66 0.24 295);
+  --chart-1: oklch(0.66 0.24 295);
+  --chart-2: oklch(0.83 0.15 200);
+  --chart-3: oklch(0.64 0.2 258);
+  --chart-4: oklch(0.76 0.16 155);
+  --chart-5: oklch(0.82 0.15 80);
+  --sidebar: oklch(0.15 0.014 270);
+  --sidebar-foreground: oklch(0.96 0.01 260);
+  --sidebar-primary: oklch(0.66 0.24 295);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.22 0.02 270);
+  --sidebar-accent-foreground: oklch(0.96 0.01 260);
+  --sidebar-border: oklch(0.78 0.12 85 / 14%);
+  --sidebar-ring: oklch(0.66 0.24 295);
+
+  --gradient-neon: linear-gradient(120deg, var(--neon-violet), var(--neon-blue) 55%, var(--neon-cyan));
+  --gradient-glow: radial-gradient(60% 60% at 20% 0%, color-mix(in oklab, var(--neon-violet) 28%, transparent), transparent 70%),
+    radial-gradient(50% 50% at 90% 10%, color-mix(in oklab, var(--neon-cyan) 18%, transparent), transparent 70%);
+  --shadow-neon: 0 0 0 1px color-mix(in oklab, var(--neon-violet) 40%, transparent), 0 10px 40px -10px color-mix(in oklab, var(--neon-violet) 55%, transparent);
+  --shadow-cyan: 0 0 24px -4px color-mix(in oklab, var(--neon-cyan) 60%, transparent);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { color-scheme: dark; }
+  body {
+    background-color: var(--color-background);
+    background-image: var(--gradient-glow);
+    background-attachment: fixed;
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .font-display { font-family: var(--font-display); letter-spacing: -0.02em; }
+}
+
+@utility text-gradient-neon {
+  background: var(--gradient-neon);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@utility bg-gradient-neon { background: var(--gradient-neon); }
+@utility shadow-neon { box-shadow: var(--shadow-neon); }
+@utility shadow-cyan { box-shadow: var(--shadow-cyan); }
+@utility glass {
+  background: color-mix(in oklab, var(--card) 78%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+@keyframes eq {
+  0%, 100% { transform: scaleY(0.25); }
+  50% { transform: scaleY(1); }
+}
+@utility eq-bar {
+  transform-origin: bottom;
+  animation: eq 0.9s ease-in-out infinite;
+}
+@keyframes pulse-live {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--live) 60%, transparent); }
+  50% { box-shadow: 0 0 0 6px transparent; }
+}
+@utility pulse-live { animation: pulse-live 1.8s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .eq-bar, .pulse-live { animation: none; }
+}
+
+/* Premium neon radio surfaces */
+@utility premium-panel {
+  border: 1px solid color-mix(in oklab, oklch(0.78 0.12 85) 22%, var(--border));
+  border-radius: 1.35rem;
+  background: linear-gradient(145deg, color-mix(in oklab, var(--card) 94%, transparent), color-mix(in oklab, var(--background) 88%, transparent));
+  box-shadow: 0 18px 60px -35px color-mix(in oklab, var(--neon-violet) 45%, transparent), inset 0 1px 0 color-mix(in oklab, white 5%, transparent);
+}
+@utility gold-accent {
+  color: oklch(0.82 0.13 85);
+}
+@utility gold-line {
+  border-color: color-mix(in oklab, oklch(0.78 0.12 85) 35%, transparent);
+}

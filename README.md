@@ -1,50 +1,64 @@
-# Radio Viva Studio AI
+# Sintonia Radio Viva
 
-Rádio web com pesquisa de vídeos pela YouTube Data API v3 e reprodução incorporada pelo YouTube IFrame Player API.
+Aplicação web de rádio online com DJ de IA, pedidos musicais e painel de administração.
+
+## Tecnologias
+
+- TanStack Start
+- React + TypeScript
+- Supabase (autenticação e dados)
+- Bun
+- Vitest e ESLint
 
 ## Requisitos
-- Node.js 20+
-- npm
-- Chave da YouTube Data API v3 (Google Cloud)
 
-## Configuração
-1. No Google Cloud Console, crie ou selecione um projeto.
-2. Ative **YouTube Data API v3**.
-3. Crie uma API key e restrinja-a à YouTube Data API v3.
-4. Copie `.env.example` para `.env` e informe `YOUTUBE_API_KEY`.
-5. Não publique o arquivo `.env` nem coloque a chave em variáveis `VITE_*`.
+- Bun (versão compatível com o lockfile)
+- Projeto Supabase próprio para implantação fora do Lovable Cloud
 
-## Executar em desenvolvimento
+## Executar localmente
+
 ```bash
-npm install
+git clone https://github.com/ederteccelulares-creator/radio-viva-studio-ai.git
+cd radio-viva-studio-ai
+git checkout sintonia-radio-viva-import
+bun install --frozen-lockfile
 cp .env.example .env
-# Edite .env e informe sua chave
-npm run dev
 ```
-Vite inicia na porta 5173 e a API Express na 3001. O Vite encaminha `/api` para o servidor.
 
-## Produção
+Preencha as variáveis do arquivo `.env` com os dados do seu projeto Supabase. Depois execute:
+
 ```bash
-npm install
-npm run build
-npm start
+bun run dev
 ```
-O Express serve a pasta `dist` e os endpoints `/api` na porta definida por `PORT`.
 
-## Funcionalidades
-- Pesquisa de vídeos incorporáveis em português e região Brasil.
-- Resultados com miniatura, título e canal.
-- Adição à fila e reprodução pelo player oficial do YouTube.
-- Avanço automático quando o vídeo termina.
-- Controle de volume e locução do DJ via voz do navegador.
-- Cache de pesquisa de 5 minutos.
+## Variáveis de ambiente
 
-## Limitações importantes
-- O método `search.list` tem uma cota padrão separada de 100 chamadas por dia, sujeita às regras atuais do Google.
-- A reprodução ocorre dentro do player oficial incorporado; alguns vídeos bloqueiam incorporação ou autoplay.
-- Isto não é uma transmissão de áudio contínua: o player de vídeo oficial permanece visível.
-- Verifique os direitos de execução pública das músicas e os termos aplicáveis ao uso comercial.
+Veja [.env.example](.env.example).
 
-## Endpoints
-- `GET /api/health`
-- `GET /api/youtube/search?q=nome+da+musica`
+- `VITE_SUPABASE_URL`: URL pública do projeto Supabase.
+- `VITE_SUPABASE_PUBLISHABLE_KEY`: chave publicável/anon do Supabase, usada no navegador.
+- `SUPABASE_URL`: URL do Supabase para operações no servidor.
+- `SUPABASE_SERVICE_ROLE_KEY`: chave de serviço, exclusivamente no servidor. Nunca use prefixo `VITE_`, nunca a envie ao navegador e nunca a coloque no Git.
+- `LOVABLE_DB_MIGRATION_URL`: variável opcional usada pela configuração de migrações Drizzle, se aplicável.
+
+Não coloque chaves, tokens ou senhas em arquivos versionados. Use os Secrets do provedor de hospedagem para valores de produção. O arquivo `.env` deve permanecer local.
+
+## Verificações
+
+```bash
+bun run test
+bun run lint
+bun run build
+```
+
+O GitHub Actions executa essas verificações automaticamente em commits e pull requests para a branch de integração.
+
+## Segurança e implantação
+
+Antes de publicar, configure as URLs de autenticação e os redirecionamentos OAuth no Supabase para o domínio definitivo. Revise também as políticas RLS e os segredos do ambiente de produção.
+
+A integração com o Lovable Cloud pode exigir configuração ou substituição ao migrar para uma infraestrutura própria. A cópia deste repositório não configura automaticamente um projeto Supabase externo nem publica a aplicação.
+
+## Fluxo Git
+
+O trabalho importado está na branch `sintonia-radio-viva-import`. A branch `main` foi preservada; a integração está aguardando revisão no pull request #1.
