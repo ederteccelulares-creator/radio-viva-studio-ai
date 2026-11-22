@@ -92,11 +92,11 @@ function Index() {
       }),
   });
   return (
-    <main className="mx-auto max-w-5xl px-5 py-8 md:px-10 md:py-12">
-      <header className="mb-14 flex items-center justify-between gap-4 border-b border-border pb-6">
+    <main className="relative mx-auto max-w-6xl px-4 py-5 sm:px-6 md:px-10 md:py-10">
+      <header className="mb-8 flex items-center justify-between gap-4 rounded-2xl border border-border/70 bg-card/70 px-4 py-4 shadow-lg shadow-black/20 backdrop-blur-xl sm:px-6">
         <div className="flex items-center gap-3">
-          <Radio className="size-7 shrink-0 text-neon-cyan" />
-          <span className="text-sm font-semibold">Sintonia Radio Viva</span>
+          <Radio className="size-8 shrink-0 text-neon-cyan drop-shadow-[0_0_12px_rgba(34,211,238,0.55)]" />
+          <span className="text-sm font-bold tracking-wide gold-accent">SINTONIA <span className="text-foreground">RADIO VIVA</span></span>
         </div>
         <Button asChild variant="outline" size="sm">
           <a href="/login">
@@ -110,12 +110,12 @@ function Index() {
           <Radio className="size-4" />
           {station.live_program_active ? "AO VIVO" : "RÁDIO ONLINE"}
         </p>
-        <h1 className="mb-5 break-words text-3xl font-semibold md:text-5xl">{station.name}</h1>
-        <p className="max-w-xl text-lg text-muted-foreground">{station.slogan}</p>
+        <h1 className="mb-5 break-words text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-6xl">{station.name}</h1>
+        <p className="max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">{station.slogan}</p>
         {station.live_program_active && <p className="mt-4">{station.live_program_title}</p>}
       </section>
       <RadioPlayer />
-      <section className="border-t border-border py-8">
+      <section className="premium-panel mb-6 p-5 sm:p-8">
         <h2 className="mb-6 flex items-center gap-3 text-xl font-semibold">
           <CalendarDays className="size-5 text-neon-cyan" />
           Programação
@@ -146,9 +146,9 @@ function Index() {
             Nenhum programa cadastrado para este período.
           </p>
         ) : (
-          <ul className="divide-y divide-border">
+          <ul className="divide-y divide-border/70">
             {visible.map((slot) => (
-              <li key={slot.id} className="flex flex-wrap items-start gap-6 py-5">
+              <li key={slot.id} className="flex flex-wrap items-start gap-4 rounded-xl px-3 py-5 transition-colors hover:bg-white/[0.025] sm:gap-6">
                 <div className="w-40 shrink-0 text-sm text-neon-cyan">
                   {DAYS[slot.day_of_week]}
                   <br />
@@ -176,7 +176,7 @@ function Index() {
         ) : (
           <ol className="divide-y divide-border">
             {queue.map((item, i) => (
-              <li key={item.id} className="flex items-center gap-4 py-4">
+              <li key={item.id} className="flex items-center gap-4 rounded-xl px-3 py-4 transition-colors hover:bg-white/[0.025]">
                 <span className="text-neon-cyan">{i + 1}</span>
                 <span className="min-w-0 flex-1 break-words">{item.song_text}</span>
                 <span className="text-xs text-muted-foreground">{STATUS_LABEL[item.status]}</span>
