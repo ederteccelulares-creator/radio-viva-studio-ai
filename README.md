@@ -1,50 +1,44 @@
-# Radio Viva Studio AI
+# Welcome to your Lovable project
 
-Rádio web com pesquisa de vídeos pela YouTube Data API v3 e reprodução incorporada pelo YouTube IFrame Player API.
+## Integrações de agentes — Sintonia Radio Viva
 
-## Requisitos
-- Node.js 20+
-- npm
-- Chave da YouTube Data API v3 (Google Cloud)
+O servidor MCP fica em `/mcp` e exige OAuth com consentimento da conta conectada. Publique o app antes de conectar clientes externos. Não use tokens copiados de sessões como método de conexão.
 
-## Configuração
-1. No Google Cloud Console, crie ou selecione um projeto.
-2. Ative **YouTube Data API v3**.
-3. Crie uma API key e restrinja-a à YouTube Data API v3.
-4. Copie `.env.example` para `.env` e informe `YOUTUBE_API_KEY`.
-5. Não publique o arquivo `.env` nem coloque a chave em variáveis `VITE_*`.
+Ferramentas somente de consulta:
+- `get_station`: nome, slogan, modo, programa ao vivo e regras de pedidos.
+- `list_schedule`: até 100 programas, com filtro opcional por dia (0 domingo a 6 sábado).
+- `list_queue`: até 50 entradas da fila pública, sem notas privadas nem nomes completos.
 
-## Executar em desenvolvimento
-```bash
-npm install
-cp .env.example .env
-# Edite .env e informe sua chave
+As consultas usam a identidade do chamador e mantêm as políticas existentes. Não há ferramentas de alteração, exclusão ou envio. A página inicial também oferece ferramentas WebMCP para ler o que está exibido e filtrar a programação, mantendo os controles normais funcionando.
+
+A autorização usa `/.lovable/oauth/consent`; `/login` preserva esse destino durante entrada e cadastro, inclusive confirmação por e-mail. A lista de redirecionamento configurada inclui os caminhos do domínio do projeto.
+
+Teste as regras e o roteamento com `bunx vitest run src/test/oauth.test.ts src/test/app-routing.test.tsx`.
+
+This project was built with [Lovable](https://lovable.dev).
+
+## Build with Lovable
+
+Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+
+- **Ship faster**: describe what you want to build and Lovable handles the code.
+- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
+- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+
+## Development
+
+Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+
+```sh
+git clone <this-repository-url>
+cd <repository-name>
+npm i
 npm run dev
 ```
-Vite inicia na porta 5173 e a API Express na 3001. O Vite encaminha `/api` para o servidor.
 
-## Produção
-```bash
-npm install
-npm run build
-npm start
-```
-O Express serve a pasta `dist` e os endpoints `/api` na porta definida por `PORT`.
+## Built with
 
-## Funcionalidades
-- Pesquisa de vídeos incorporáveis em português e região Brasil.
-- Resultados com miniatura, título e canal.
-- Adição à fila e reprodução pelo player oficial do YouTube.
-- Avanço automático quando o vídeo termina.
-- Controle de volume e locução do DJ via voz do navegador.
-- Cache de pesquisa de 5 minutos.
-
-## Limitações importantes
-- O método `search.list` tem uma cota padrão separada de 100 chamadas por dia, sujeita às regras atuais do Google.
-- A reprodução ocorre dentro do player oficial incorporado; alguns vídeos bloqueiam incorporação ou autoplay.
-- Isto não é uma transmissão de áudio contínua: o player de vídeo oficial permanece visível.
-- Verifique os direitos de execução pública das músicas e os termos aplicáveis ao uso comercial.
-
-## Endpoints
-- `GET /api/health`
-- `GET /api/youtube/search?q=nome+da+musica`
+- TanStack Start
+- TypeScript
+- React
+- Tailwind CSS
