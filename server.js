@@ -1,3 +1,5 @@
+import 'dotenv/config'
+import { rateLimit } from 'express-rate-limit'
 import express from 'express'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -9,8 +11,9 @@ const cache = new Map()
 const cacheTtl = 5 * 60 * 1000
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
+const youtubeSearchLimit = rateLimit({ windowMs: 15 * 60 * 1000, limit: 30, standardHeaders: 'draft-7', legacyHeaders: false })
 app.get('/api/health', (_req, res) => res.json({ ok: true, youtubeConfigured: Boolean(apiKey) }))
-app.get('/api/youtube/search', async (req, res) => {
+app.get('/api/youtube/search', youtubeSearchLimit, async (req, res) => {
   const q = String(req.query.q || '').trim().slice(0, 120)
   if (q.length < 2) return res.status(400).json({ error: 'Digite pelo menos 2 caracteres.' })
   if (!apiKey) return res.status(503).json({ error: 'API do YouTube ainda não configurada. Adicione YOUTUBE_API_KEY no ambiente do servidor.' })
