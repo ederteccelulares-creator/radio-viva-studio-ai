@@ -1,44 +1,64 @@
-# Welcome to your Lovable project
+# Sintonia Radio Viva
 
-## Integrações de agentes — Sintonia Radio Viva
+Aplicação web de rádio online com DJ de IA, pedidos musicais e painel de administração.
 
-O servidor MCP fica em `/mcp` e exige OAuth com consentimento da conta conectada. Publique o app antes de conectar clientes externos. Não use tokens copiados de sessões como método de conexão.
-
-Ferramentas somente de consulta:
-- `get_station`: nome, slogan, modo, programa ao vivo e regras de pedidos.
-- `list_schedule`: até 100 programas, com filtro opcional por dia (0 domingo a 6 sábado).
-- `list_queue`: até 50 entradas da fila pública, sem notas privadas nem nomes completos.
-
-As consultas usam a identidade do chamador e mantêm as políticas existentes. Não há ferramentas de alteração, exclusão ou envio. A página inicial também oferece ferramentas WebMCP para ler o que está exibido e filtrar a programação, mantendo os controles normais funcionando.
-
-A autorização usa `/.lovable/oauth/consent`; `/login` preserva esse destino durante entrada e cadastro, inclusive confirmação por e-mail. A lista de redirecionamento configurada inclui os caminhos do domínio do projeto.
-
-Teste as regras e o roteamento com `bunx vitest run src/test/oauth.test.ts src/test/app-routing.test.tsx`.
-
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
-
-## Built with
+## Tecnologias
 
 - TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
+- React + TypeScript
+- Supabase (autenticação e dados)
+- Bun
+- Vitest e ESLint
+
+## Requisitos
+
+- Bun (versão compatível com o lockfile)
+- Projeto Supabase próprio para implantação fora do Lovable Cloud
+
+## Executar localmente
+
+```bash
+git clone https://github.com/ederteccelulares-creator/radio-viva-studio-ai.git
+cd radio-viva-studio-ai
+git checkout sintonia-radio-viva-import
+bun install --frozen-lockfile
+cp .env.example .env
+```
+
+Preencha as variáveis do arquivo `.env` com os dados do seu projeto Supabase. Depois execute:
+
+```bash
+bun run dev
+```
+
+## Variáveis de ambiente
+
+Veja [.env.example](.env.example).
+
+- `VITE_SUPABASE_URL`: URL pública do projeto Supabase.
+- `VITE_SUPABASE_PUBLISHABLE_KEY`: chave publicável/anon do Supabase, usada no navegador.
+- `SUPABASE_URL`: URL do Supabase para operações no servidor.
+- `SUPABASE_SERVICE_ROLE_KEY`: chave de serviço, exclusivamente no servidor. Nunca use prefixo `VITE_`, nunca a envie ao navegador e nunca a coloque no Git.
+- `LOVABLE_DB_MIGRATION_URL`: variável opcional usada pela configuração de migrações Drizzle, se aplicável.
+
+Não coloque chaves, tokens ou senhas em arquivos versionados. Use os Secrets do provedor de hospedagem para valores de produção. O arquivo `.env` deve permanecer local.
+
+## Verificações
+
+```bash
+bun run test
+bun run lint
+bun run build
+```
+
+O GitHub Actions executa essas verificações automaticamente em commits e pull requests para a branch de integração.
+
+## Segurança e implantação
+
+Antes de publicar, configure as URLs de autenticação e os redirecionamentos OAuth no Supabase para o domínio definitivo. Revise também as políticas RLS e os segredos do ambiente de produção.
+
+A integração com o Lovable Cloud pode exigir configuração ou substituição ao migrar para uma infraestrutura própria. A cópia deste repositório não configura automaticamente um projeto Supabase externo nem publica a aplicação.
+
+## Fluxo Git
+
+O trabalho importado está na branch `sintonia-radio-viva-import`. A branch `main` foi preservada; a integração está aguardando revisão no pull request #1.
