@@ -79,6 +79,5 @@ export default function App() {
       </section>}
       <footer><span>© 2026 Radio Viva Studio AI</span><span>Reprodução via YouTube <Radio size={13}/></span></footer>
     </main>
-    {current && <div className="youtube-player-host"><YoutubePlayer videoId={current.id} playing={playing} volume={volume} onEnded={nextTrack} onPlayState={setPlaying} compact/> </div>}
   </div>
 }
